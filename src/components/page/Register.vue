@@ -13,10 +13,17 @@
                         <el-button slot="prepend" icon="el-icon-lx-lock"></el-button>
                     </el-input>
                 </el-form-item>
+                <el-form-item>
+                    <el-select v-model="ruleForm.role" placeholder="申请角色">
+                        <el-option v-for="item in roles" :value="item" :key="item" name="ruleForm.role">
+                            {{item}}
+                        </el-option>
+                    </el-select>
+                </el-form-item>
                 <div class="login-btn">
-                    <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
+                    <el-button type="primary" @click="submitForm('ruleForm')">提交申请</el-button>
                 </div>
-                <p class="login-tips">Tips: 使用钱包账户登录<router-link to="register" style="float:right;color: #fff;">申请成为正式用户</router-link></p>
+                <p class="login-tips">Tips: 使用钱包地址进行申请<router-link to="login" style="float:right;color: #fff;">已经是用户</router-link></p>
             </el-form>
         </div>
     </div>
@@ -28,25 +35,40 @@
             return {
                 ruleForm: {
                     username: '',
-                    password: ''
+                    role: '',
+                    password: '',
+                    checked: false
                 },
                 rules: {
                     username: [
-                        { required: true, message: 'User account needed', trigger: 'blur' }
+                        { required: true, message: 'User address needed', trigger: 'blur' }
+                    ],
+                    role: [
+                        { required: true, message: 'Target role needed', trigger: 'blur' }
                     ],
                     password: [
                         { required: true, message: 'Password needed', trigger: 'blur' }
                     ]
-                }
+                },
+                roles: []
             }
+        },
+        created() {
+            this.$axios.get('/service/system/getRoleNames')
+                .then((res) => {
+                   for(var role in res.data) {
+                            this.roles.push(res.data[role]);
+                        }
+                })
         },
         methods: {
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        this.$axios.post('/service/user/signIn', {
+                        this.$axios.post('/service/system/signUp', {
                             address: this.ruleForm.username,
-                            password: this.ruleForm.password
+                            password: this.ruleForm.password,
+                            role: this.ruleForm.role
                         }).then(res => {
                             localStorage.setItem('ms_username',this.ruleForm.username);
                             if (res.data.result) {

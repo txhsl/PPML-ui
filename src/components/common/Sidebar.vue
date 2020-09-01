@@ -41,86 +41,117 @@
                     {
                         icon: 'el-icon-lx-home',
                         index: 'dashboard',
-                        title: '系统首页'
-                    },
-                    {
-                        icon: 'el-icon-lx-cascades',
-                        index: 'table',
-                        title: '基础表格'
-                    },
-                    {
-                        icon: 'el-icon-lx-copy',
-                        index: 'tabs',
-                        title: 'tab选项卡'
-                    },
-                    {
-                        icon: 'el-icon-lx-calendar',
-                        index: '3',
-                        title: '表单相关',
-                        subs: [
-                            {
-                                index: 'form',
-                                title: '基本表单'
-                            },
-                            {
-                                index: '3-2',
-                                title: '三级菜单',
-                                subs: [
-                                    {
-                                        index: 'editor',
-                                        title: '富文本编辑器'
-                                    },
-                                    {
-                                        index: 'markdown',
-                                        title: 'markdown编辑器'
-                                    },
-                                ]
-                            },
-                            {
-                                index: 'upload',
-                                title: '文件上传'
-                            }
-                        ]
-                    },
-                    {
-                        icon: 'el-icon-lx-emoji',
-                        index: 'icon',
-                        title: '自定义图标'
-                    },
-                    {
-                        icon: 'el-icon-lx-favor',
-                        index: 'charts',
-                        title: 'schart图表'
-                    },
-                    {
-                        icon: 'el-icon-rank',
-                        index: '6',
-                        title: '拖拽组件',
-                        subs: [
-                            {
-                                index: 'drag',
-                                title: '拖拽列表',
-                            },
-                            {
-                                index: 'dialog',
-                                title: '拖拽弹框',
-                            }
-                        ]
-                    },
-                    {
-                        icon: 'el-icon-lx-warn',
-                        index: '7',
-                        title: '错误处理',
+                        title: '系统状态'
+                    },{
+                        icon: 'el-icon-lx-group',
+                        index: '1',
+                        title: '权限管理',
                         subs: [
                             {
                                 index: 'permission',
-                                title: '权限测试'
+                                title: '权限一览'
                             },
                             {
-                                index: '404',
-                                title: '404页面'
+                                index: 'role',
+                                title: '角色一览'
+                            },
+                            {
+                                index: 'property',
+                                title: '属性一览'
                             }
                         ]
+                    },
+                    {
+                        icon: 'el-icon-lx-qrcode',
+                        index: '2',
+                        title: '数据管理',
+                        subs: [
+                            {
+                                index: '2-1',
+                                title: '写入',
+                                subs: [
+                                    {
+                                        index: 'write',
+                                        title: '简单写入'
+                                    },
+                                    {
+                                        index: 'writeMultiple',
+                                        title: '批量写入'
+                                    }
+                                ]
+                            },
+                            {
+                                index: '2-2',
+                                title: '查询',
+                                subs: [
+                                    {
+                                        index: 'read',
+                                        title: '简单查询'
+                                    },
+                                    {
+                                        index: 'readMultiple',
+                                        title: '精确查询'
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        icon: 'el-icon-lx-attention',
+                        index: '3',
+                        title: '后台管理',
+                        subs: [
+                            {
+                                icon: 'el-icon-lx-sort',
+                                index: 'transaction',
+                                title: '后台任务'
+                            },
+                            {
+                                icon: 'el-icon-lx-attention',
+                                index: 'subscribe',
+                                title: '后台监听'
+                            }
+                        ]
+                    },
+                    {
+                        icon: 'el-icon-lx-search',
+                        index: '4',
+                        title: '数据审计',
+                        subs: [
+                            {
+                                index: '4-1',
+                                title: '审计',
+                                subs: [
+                                    {
+                                        index: 'auditProperty',
+                                        title: '合约审计'
+                                    },
+                                    {
+                                        index: 'auditUser',
+                                        title: '用户审计'
+                                    }
+                                ]
+                            },
+                            {
+                                index: '4-2',
+                                title: '举报',
+                                subs: [
+                                    {
+                                        index: 'report',
+                                        title: '发送举报'
+                                    },
+                                    {
+                                        index: 'arbitrate',
+                                        title: '处理举报'
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        icon: 'el-icon-lx-message',
+                        index: 'message',
+                        title: '消息中心'
                     }
                 ]
             }

@@ -12,75 +12,101 @@ export default new Router({
         {
             path: '/',
             component: resolve => require(['../components/common/Home.vue'], resolve),
-            meta: { title: '自述文件' },
+            meta: { title: '主页' },
             children:[
                 {
                     path: '/dashboard',
                     component: resolve => require(['../components/page/Dashboard.vue'], resolve),
-                    meta: { title: '系统首页' }
+                    meta: { title: '系统状态' }
                 },
                 {
                     path: '/icon',
                     component: resolve => require(['../components/page/Icon.vue'], resolve),
-                    meta: { title: '自定义图标' }
+                    meta: { title: '图标' }
                 },
                 {
-                    path: '/table',
-                    component: resolve => require(['../components/page/BaseTable.vue'], resolve),
-                    meta: { title: '基础表格' }
+                    path: '/permission',
+                    component: resolve => require(['../components/page/PermissionTable.vue'], resolve),
+                    meta: { title: '权限一览' }
                 },
                 {
-                    path: '/tabs',
-                    component: resolve => require(['../components/page/Tabs.vue'], resolve),
-                    meta: { title: 'tab选项卡' }
+                    path: '/role',
+                    component: resolve => require(['../components/page/RoleTable.vue'], resolve),
+                    meta: { title: '角色一览'}
                 },
                 {
-                    path: '/form',
-                    component: resolve => require(['../components/page/BaseForm.vue'], resolve),
-                    meta: { title: '基本表单' }
+                    path: '/property',
+                    component: resolve => require(['../components/page/PropertyTable.vue'], resolve),
+                    meta: { title: '属性一览', leaderPermission: true }
                 },
                 {
-                    // 富文本编辑器组件
-                    path: '/editor',
-                    component: resolve => require(['../components/page/VueEditor.vue'], resolve),
-                    meta: { title: '富文本编辑器' }
+                    path: '/read',
+                    component: resolve => require(['../components/page/ReadForm.vue'], resolve),
+                    meta: { title: '简单查询' }
                 },
                 {
-                    // markdown组件
-                    path: '/markdown',
-                    component: resolve => require(['../components/page/Markdown.vue'], resolve),
-                    meta: { title: 'markdown编辑器' }    
+                    path: '/readMultiple',
+                    component: resolve => require(['../components/page/ReadMulForm.vue'], resolve),
+                    meta: { title: '精确查询' }
                 },
+                {
+                    path: '/write',
+                    component: resolve => require(['../components/page/WriteForm.vue'], resolve),
+                    meta: { title: '简单写入' }
+                },
+                {
+                    path: '/writeMultiple',
+                    component: resolve => require(['../components/page/WriteMulForm.vue'], resolve),
+                    meta: { title: '批量写入' }
+                },
+                {
+                    path: '/message',
+                    component: resolve => require(['../components/page/MessageTabs.vue'], resolve),
+                    meta: { title: '消息中心' }
+                },
+                {
+                    path: '/transaction',
+                    component: resolve => require(['../components/page/TransactionTabs.vue'], resolve),
+                    meta: { title: '后台任务' }
+                },
+                {
+                    path: '/subscribe',
+                    component: resolve => require(['../components/page/SubscribeList.vue'], resolve),
+                    meta: { title: '后台监听' }
+                },
+                {
+                    path: '/auditUser',
+                    component: resolve => require(['../components/page/AuditUserForm.vue'], resolve),
+                    meta: { title: '用户审计' }
+                },
+                {
+                    path: '/auditProperty',
+                    component: resolve => require(['../components/page/AuditPropertyForm.vue'], resolve),
+                    meta: { title: '属性审计' }
+                },
+                {
+                    path: '/report',
+                    component: resolve => require(['../components/page/ReportForm.vue'], resolve),
+                    meta: { title: '发送举报' }
+                },
+                {
+                    path: '/arbitrate',
+                    component: resolve => require(['../components/page/ArbitrateForm.vue'], resolve),
+                    meta: { title: '处理举报' }
+                },
+
                 {
                     // 图片上传组件
                     path: '/upload',
                     component: resolve => require(['../components/page/Upload.vue'], resolve),
-                    meta: { title: '文件上传' }   
+                    meta: { title: '图片上传' }   
                 },
                 {
                     // vue-schart组件
                     path: '/charts',
                     component: resolve => require(['../components/page/BaseCharts.vue'], resolve),
-                    meta: { title: 'schart图表' }
-                },
-                {
-                    // 拖拽列表组件
-                    path: '/drag',
-                    component: resolve => require(['../components/page/DragList.vue'], resolve),
-                    meta: { title: '拖拽列表' }
-                },
-                {
-                    // 拖拽Dialog组件
-                    path: '/dialog',
-                    component: resolve => require(['../components/page/DragDialog.vue'], resolve),
-                    meta: { title: '拖拽弹框' }
-                },
-                {
-                    // 权限页面
-                    path: '/permission',
-                    component: resolve => require(['../components/page/Permission.vue'], resolve),
-                    meta: { title: '权限测试', permission: true }
-                },
+                    meta: { title: '基本图表' }
+                }, 
                 {
                     path: '/404',
                     component: resolve => require(['../components/page/404.vue'], resolve),
@@ -96,6 +122,10 @@ export default new Router({
         {
             path: '/login',
             component: resolve => require(['../components/page/Login.vue'], resolve)
+        },
+        {
+            path: '/register',
+            component: resolve => require(['../components/page/Register.vue'], resolve)
         },
         {
             path: '*',
