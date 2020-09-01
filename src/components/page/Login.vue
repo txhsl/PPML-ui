@@ -1,7 +1,7 @@
 <template>
     <div class="login-wrap">
         <div class="ms-login">
-            <div class="ms-title">溯源数据管理系统</div>
+            <div class="ms-title">机器学习资源平台</div>
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="ms-content">
                 <el-form-item prop="username">
                     <el-input v-model="ruleForm.username" placeholder="账户地址">
@@ -16,7 +16,7 @@
                 <div class="login-btn">
                     <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
                 </div>
-                <p class="login-tips">Tips: 使用钱包账户登录<router-link to="register" style="float:right;color: #fff;">申请成为正式用户</router-link></p>
+                <p class="login-tips">Tips: 使用钱包账户登录<router-link style="float:right;color: #fff;">创建新钱包</router-link></p>
             </el-form>
         </div>
     </div>

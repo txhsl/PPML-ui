@@ -48,14 +48,6 @@
                         title: '权限管理',
                         subs: [
                             {
-                                index: 'permission',
-                                title: '权限一览'
-                            },
-                            {
-                                index: 'role',
-                                title: '角色一览'
-                            },
-                            {
                                 index: 'property',
                                 title: '属性一览'
                             }
@@ -73,10 +65,6 @@
                                     {
                                         index: 'write',
                                         title: '简单写入'
-                                    },
-                                    {
-                                        index: 'writeMultiple',
-                                        title: '批量写入'
                                     }
                                 ]
                             },
@@ -87,10 +75,6 @@
                                     {
                                         index: 'read',
                                         title: '简单查询'
-                                    },
-                                    {
-                                        index: 'readMultiple',
-                                        title: '精确查询'
                                     }
                                 ]
                             }
@@ -110,41 +94,6 @@
                                 icon: 'el-icon-lx-attention',
                                 index: 'subscribe',
                                 title: '后台监听'
-                            }
-                        ]
-                    },
-                    {
-                        icon: 'el-icon-lx-search',
-                        index: '4',
-                        title: '数据审计',
-                        subs: [
-                            {
-                                index: '4-1',
-                                title: '审计',
-                                subs: [
-                                    {
-                                        index: 'auditProperty',
-                                        title: '合约审计'
-                                    },
-                                    {
-                                        index: 'auditUser',
-                                        title: '用户审计'
-                                    }
-                                ]
-                            },
-                            {
-                                index: '4-2',
-                                title: '举报',
-                                subs: [
-                                    {
-                                        index: 'report',
-                                        title: '发送举报'
-                                    },
-                                    {
-                                        index: 'arbitrate',
-                                        title: '处理举报'
-                                    }
-                                ]
                             }
                         ]
                     },

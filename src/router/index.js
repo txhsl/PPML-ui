@@ -25,16 +25,6 @@ export default new Router({
                     meta: { title: '图标' }
                 },
                 {
-                    path: '/permission',
-                    component: resolve => require(['../components/page/PermissionTable.vue'], resolve),
-                    meta: { title: '权限一览' }
-                },
-                {
-                    path: '/role',
-                    component: resolve => require(['../components/page/RoleTable.vue'], resolve),
-                    meta: { title: '角色一览'}
-                },
-                {
                     path: '/property',
                     component: resolve => require(['../components/page/PropertyTable.vue'], resolve),
                     meta: { title: '属性一览', leaderPermission: true }
@@ -45,19 +35,9 @@ export default new Router({
                     meta: { title: '简单查询' }
                 },
                 {
-                    path: '/readMultiple',
-                    component: resolve => require(['../components/page/ReadMulForm.vue'], resolve),
-                    meta: { title: '精确查询' }
-                },
-                {
                     path: '/write',
                     component: resolve => require(['../components/page/WriteForm.vue'], resolve),
                     meta: { title: '简单写入' }
-                },
-                {
-                    path: '/writeMultiple',
-                    component: resolve => require(['../components/page/WriteMulForm.vue'], resolve),
-                    meta: { title: '批量写入' }
                 },
                 {
                     path: '/message',
@@ -73,26 +53,6 @@ export default new Router({
                     path: '/subscribe',
                     component: resolve => require(['../components/page/SubscribeList.vue'], resolve),
                     meta: { title: '后台监听' }
-                },
-                {
-                    path: '/auditUser',
-                    component: resolve => require(['../components/page/AuditUserForm.vue'], resolve),
-                    meta: { title: '用户审计' }
-                },
-                {
-                    path: '/auditProperty',
-                    component: resolve => require(['../components/page/AuditPropertyForm.vue'], resolve),
-                    meta: { title: '属性审计' }
-                },
-                {
-                    path: '/report',
-                    component: resolve => require(['../components/page/ReportForm.vue'], resolve),
-                    meta: { title: '发送举报' }
-                },
-                {
-                    path: '/arbitrate',
-                    component: resolve => require(['../components/page/ArbitrateForm.vue'], resolve),
-                    meta: { title: '处理举报' }
                 },
 
                 {
@@ -122,10 +82,6 @@ export default new Router({
         {
             path: '/login',
             component: resolve => require(['../components/page/Login.vue'], resolve)
-        },
-        {
-            path: '/register',
-            component: resolve => require(['../components/page/Register.vue'], resolve)
         },
         {
             path: '*',

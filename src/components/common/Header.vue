@@ -4,7 +4,7 @@
         <div class="collapse-btn" @click="collapseChage">
             <i class="el-icon-menu"></i>
         </div>
-        <div class="logo">溯源数据管理系统</div>
+        <div class="logo">机器学习资源平台</div>
         <div class="header-right">
             <div class="header-user-con">
                 <!-- 全屏显示 -->
