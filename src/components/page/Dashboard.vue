@@ -2,23 +2,13 @@
     <div>
         <el-row :gutter="20">
             <el-col :span="10">
-                <el-card shadow="hover" class="mgb20" style="height:300px;">
+                <el-card shadow="hover" class="mgb20">
                     <div class="user-info">
                         <img src="../../assets/img/img.jpg" class="user-avator" alt="">
-                        <div class="user-info-cont">
-                            <div class="user-info-name">{{role}}</div>
+                        <div>
+                            <div class="user-info-list">账户: <span>{{name}}</span></div>
+                            <div class="user-info-list">余额: <span>{{balance.toFixed(2)}} Ether</span></div>
                         </div>
-                    </div>
-                    <div class="user-info-list">账户: <span>{{name}}</span></div>
-                    <div class="user-info-list">余额: <span>{{balance.toFixed(2)}} Ether</span></div>
-                    <div class="user-info-list">信用评分: <span>{{level}}</span></div>
-                </el-card>
-                <el-card shadow="hover" style="height:520px;">
-                    <div slot="header" class="clearfix">
-                        <span>后台任务统计</span>
-                    </div>
-                    <div v-for="name in this.roleNames" :key="name">{{name}}
-                        <el-progress :percentage="calculatePercentage(roleTxCounts[roleNames.indexOf(name)])" :color="colors[roleNames.indexOf(name)]"></el-progress>
                     </div>
                 </el-card>
             </el-col>
@@ -29,7 +19,7 @@
                             <div class="grid-content grid-con-1">
                                 <i class="el-icon-lx-people grid-con-icon"></i>
                                 <div class="grid-cont-right">
-                                    <div class="grid-num">{{roleNames.length}}</div>
+                                    <div class="grid-num">{{0}}</div>
                                     <div>角色数量</div>
                                 </div>
                             </div>
@@ -40,7 +30,7 @@
                             <div class="grid-content grid-con-2">
                                 <i class="el-icon-lx-apps grid-con-icon"></i>
                                 <div class="grid-cont-right">
-                                    <div class="grid-num">{{propertyCount}}</div>
+                                    <div class="grid-num">{{0}}</div>
                                     <div>属性数量</div>
                                 </div>
                             </div>
@@ -58,7 +48,7 @@
                         </el-card>
                     </el-col>
                 </el-row>
-                <el-card shadow="hover" style="height:473px;">
+                <el-card shadow="hover">
                     <schart ref="line" class="schart" canvasId="line" :data="data" type="line" :options="options"></schart>
                 </el-card>
             </el-col>
@@ -75,17 +65,8 @@
             return {
                 name: localStorage.getItem('ms_username'),
                 balance: 0,
-                level:0,
-                rcAddr: '',
-                roles: {},
-                roleNames: [],
-                roleTxCounts: [],
                 height: 0,
                 heightTxCount: 0,
-                leaders: ["0x6a2fb5e3bf37f0c3d90db4713f7ad4a3b2c24111", "0x38a5d4e63bbac1af0eba0d99ef927359ab8d7293", "0x40b00de2e7b694b494022eef90e874f5e553f996",
-                            "0x49e2170e0b1188f2151ac35287c743ee60ea1f6a", "0x86dec6586bfa1dfe303eafbefee843919b543fd3", "0x135b8fb39d0f06ea1f2466f7e9f39d3136431480", "0x329b81e0a2af215c7e41b32251ae4d6ff1a83e3e",
-                            "0x370287edd5a5e7c4b0f5e305b00fe95fc702ce47", "0x5386787c9ef76a235d27f000170abeede038a3db", "0xb41717679a04696a2aaac280d9d45ddd3760ff47", "0xcdfea5a11062fab4cf4c2fda88e32fc6f7753145"],
-                propertyCount: 0,
                 txCount: 0,
                 data: [{
                     name: '',
@@ -98,81 +79,21 @@
                     bottomPadding: 30,
                     topPadding: 30
                 },
-                colors: ["#42b983", "#f1e05a", "#f56c6c", "#409eff", "#909399", "#982bbf"]
+                colors: ['#42b983', '#f1e05a', '#f56c6c', '#409eff', '#909399', '#982bbf']
             }
         },
         components: {
             Schart
         },
         computed: {
-            role() {
-                if (this.name === '0x6a2fb5e3bf37f0c3d90db4713f7ad4a3b2c24111') {
-                    return '系统管理员';
-                }
-                else if (this.leaders.includes(this.name)) {
-                    return this.roleNames[this.leaders.indexOf(this.name)] + '管理员';
-                }
-                else {
-                    for(var name in this.roles) {
-                        if (this.roles[name] === this.rcAddr) {
-                            return name + '普通用户';
-                        }
-                    }
-                    return "游客";
-                }
-            }
         },
         created(){
             this.handleListener();
         },
         mounted(){
-            this.$axios.get("/service/system/getRoleNames")
-                .then(res => {
-                    this.roleNames = ["系统管理员"];
-                    res.data.forEach(name => {
-                        this.roleNames.push(name);
-                    })
-                });
-            this.$axios.get("/service/system/getRoles")
-                .then(res => {
-                    this.roles = res.data;
-                });
-            this.$axios.get("/service/system/getPropertyNames")
-                .then(res => {
-                    this.propertyCount = res.data.length;
-                });
-            this.$axios.get("/service/transaction/completed")
-                .then(res => {
-                    this.txCount = res.data.length;
-                });
-            this.$axios.get("/service/system/getRole/" + this.name)
-                .then(res => {
-                    this.rcAddr = res.data;
-                });
-            this.$axios.get("/service/transaction/balance")
+            this.$axios.get('/service/user/balance')
                 .then(res => {
                     this.balance = res.data;
-                });
-            this.$axios.get("/service/arbitration/level/" + this.name)
-                .then(res => {
-                    this.level = res.data;
-                });
-            this.$axios.get("/service/transaction/completed/address")
-                .then(res => {
-                    this.roleTxCounts = res.data;
-                });
-            this.$axios.get("/service/transaction/completed/height")
-                .then(res => {
-                    this.height = res.data.height;
-                    this.heightTxCount = res.data.recent;
-                    this.data = [];
-                    var start = this.height - this.heightTxCount.length;
-                    this.heightTxCount.forEach(element => {
-                        this.data.push({
-                            name: ++start,
-                            value: element
-                        })
-                    });
                 });
         },
         activated(){
@@ -196,9 +117,6 @@
             renderChart(){
                 this.$refs.bar.renderChart();
                 this.$refs.line.renderChart();
-            },
-            calculatePercentage(count){
-                return this.txCount == 0 ? 0 : (100*count/this.txCount).toFixed(1);
             }
         }
     }
@@ -271,8 +189,8 @@
     }
 
     .user-avator {
-        width: 120px;
-        height: 120px;
+        width: 80px;
+        height: 80px;
         border-radius: 50%;
     }
 
@@ -295,7 +213,7 @@
     }
 
     .user-info-list span {
-        margin-left: 70px;
+        margin-left: 20px;
     }
 
     .mgb20 {

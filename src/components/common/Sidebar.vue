@@ -43,59 +43,19 @@
                         index: 'dashboard',
                         title: '系统状态'
                     },{
-                        icon: 'el-icon-lx-group',
-                        index: '1',
-                        title: '权限管理',
-                        subs: [
-                            {
-                                index: 'property',
-                                title: '属性一览'
-                            }
-                        ]
+                        icon: 'el-icon-lx-file',
+                        index: 'dataset',
+                        title: '数据集管理',
                     },
                     {
-                        icon: 'el-icon-lx-qrcode',
-                        index: '2',
-                        title: '数据管理',
-                        subs: [
-                            {
-                                index: '2-1',
-                                title: '写入',
-                                subs: [
-                                    {
-                                        index: 'write',
-                                        title: '简单写入'
-                                    }
-                                ]
-                            },
-                            {
-                                index: '2-2',
-                                title: '查询',
-                                subs: [
-                                    {
-                                        index: 'read',
-                                        title: '简单查询'
-                                    }
-                                ]
-                            }
-                        ]
+                        icon: 'el-icon-lx-sort',
+                        index: 'transaction',
+                        title: '后台任务'
                     },
                     {
                         icon: 'el-icon-lx-attention',
-                        index: '3',
-                        title: '后台管理',
-                        subs: [
-                            {
-                                icon: 'el-icon-lx-sort',
-                                index: 'transaction',
-                                title: '后台任务'
-                            },
-                            {
-                                icon: 'el-icon-lx-attention',
-                                index: 'subscribe',
-                                title: '后台监听'
-                            }
-                        ]
+                        index: 'subscribe',
+                        title: '后台监听'
                     },
                     {
                         icon: 'el-icon-lx-message',

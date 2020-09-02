@@ -16,7 +16,7 @@
                 <div class="login-btn">
                     <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
                 </div>
-                <p class="login-tips">Tips: 使用钱包账户登录<router-link style="float:right;color: #fff;">创建新钱包</router-link></p>
+                <p class="login-tips">Tips: 使用钱包账户登录</p>
             </el-form>
         </div>
     </div>
@@ -27,8 +27,8 @@
         data: function(){
             return {
                 ruleForm: {
-                    username: '',
-                    password: ''
+                    username: '0x6a2fb5e3bf37f0c3d90db4713f7ad4a3b2c24111',
+                    password: 'Innov@teD@ily1'
                 },
                 rules: {
                     username: [
@@ -44,12 +44,12 @@
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        this.$axios.post('/service/user/signIn', {
-                            address: this.ruleForm.username,
+                        this.$axios.post('/service/user/login', {
+                            account: this.ruleForm.username,
                             password: this.ruleForm.password
                         }).then(res => {
                             localStorage.setItem('ms_username',this.ruleForm.username);
-                            if (res.data.result) {
+                            if (res.data) {
                                 this.$router.push('/');
                                 localStorage.setItem('ms_username',this.ruleForm.username);
                             }

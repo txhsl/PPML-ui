@@ -25,19 +25,9 @@ export default new Router({
                     meta: { title: '图标' }
                 },
                 {
-                    path: '/property',
-                    component: resolve => require(['../components/page/PropertyTable.vue'], resolve),
-                    meta: { title: '属性一览', leaderPermission: true }
-                },
-                {
-                    path: '/read',
-                    component: resolve => require(['../components/page/ReadForm.vue'], resolve),
-                    meta: { title: '简单查询' }
-                },
-                {
-                    path: '/write',
-                    component: resolve => require(['../components/page/WriteForm.vue'], resolve),
-                    meta: { title: '简单写入' }
+                    path: '/dataset',
+                    component: resolve => require(['../components/page/DataSetForm.vue'], resolve),
+                    meta: { title: '数据集管理', leaderPermission: true }
                 },
                 {
                     path: '/message',
@@ -55,12 +45,6 @@ export default new Router({
                     meta: { title: '后台监听' }
                 },
 
-                {
-                    // 图片上传组件
-                    path: '/upload',
-                    component: resolve => require(['../components/page/Upload.vue'], resolve),
-                    meta: { title: '图片上传' }   
-                },
                 {
                     // vue-schart组件
                     path: '/charts',
