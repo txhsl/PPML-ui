@@ -88,7 +88,7 @@
                 <el-form-item label="文件名">
                     <el-input v-model="upload.fileName" disabled></el-input>
                 </el-form-item>
-                <el-form-item label="文件哈希">
+                <el-form-item label="文件哈希（密文）">
                     <el-input v-model="upload.hash" disabled></el-input>
                 </el-form-item>
             </el-form>
@@ -202,7 +202,7 @@
                     reEncryptedKey: this.decrypt.reEncryptedKey,
                     encryptedHash: this.decrypt.hash
                 }).then(res => {
-                    this.$alert('数据集分片明文Hash为：' + res.data.reEncryptedKey, '解密成功', {
+                    this.$alert('数据集分片明文Hash为：' + res.data.hash, '解密成功', {
                         confirmButtonText: '确定',
                     });
                 })
