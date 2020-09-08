@@ -88,7 +88,7 @@
                 <el-form-item label="文件名">
                     <el-input v-model="upload.fileName" disabled></el-input>
                 </el-form-item>
-                <el-form-item label="文件哈希（密文）">
+                <el-form-item label="文件哈希">
                     <el-input v-model="upload.hash" disabled></el-input>
                 </el-form-item>
             </el-form>
@@ -185,7 +185,7 @@
             },
             onDownload(index, row) {
                 this.$axios.post('/service/dataset/download', {
-                    hash: row.hash
+                    hash: this.decrypt.hash
                 }).then(res => {
                     this.$alert('文件路径为：' + res.data.path, '下载成功', {
                         confirmButtonText: '确定',
@@ -195,16 +195,22 @@
             onDecryptHash(index, row) {
                 this.decrypt.hash = row.hash;
                 this.decryptVisible = true;
+
+                this.$axios.post('/service/dataset/getReKey', {
+                    encryptedKey: this.encryptedKey
+                }).then(res => {
+                    this.decrypt.reEncryptedKey = res.data.reEncryptedKey;
+                })
             },
             handleDecryptHash() {
                 this.$axios.post('/service/dataset/decryptHash', {
-                    encryptedKey: this.encryptedKey,
                     reEncryptedKey: this.decrypt.reEncryptedKey,
                     encryptedHash: this.decrypt.hash
                 }).then(res => {
                     this.$alert('数据集分片明文Hash为：' + res.data.hash, '解密成功', {
                         confirmButtonText: '确定',
                     });
+                    this.decrypt.hash = res.data.hash;
                 })
             },
             onShare() {

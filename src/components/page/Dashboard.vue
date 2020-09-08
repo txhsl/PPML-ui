@@ -8,6 +8,7 @@
                         <div>
                             <div class="user-info-list">账户: <span>{{name}}</span></div>
                             <div class="user-info-list">余额: <span>{{balance.toFixed(2)}} Ether</span></div>
+                            <div class="user-info-list">公钥: <span style="word-wrap:break-word;word-break:break-all;overflow:hidden;">{{pubkey}}</span></div>
                         </div>
                     </div>
                 </el-card>
@@ -65,6 +66,7 @@
             return {
                 name: localStorage.getItem('ms_username'),
                 balance: 0,
+                pubkey: '',
                 height: 0,
                 heightTxCount: 0,
                 txCount: 0,
@@ -94,6 +96,10 @@
             this.$axios.get('/service/user/balance')
                 .then(res => {
                     this.balance = res.data;
+                });
+            this.$axios.get('/service/user/pubKey')
+                .then(res => {
+                    this.pubkey = res.data;
                 });
         },
         activated(){
