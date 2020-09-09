@@ -196,7 +196,7 @@
                 this.decrypt.hash = row.hash;
                 this.decryptVisible = true;
 
-                this.$axios.post('/service/dataset/getReKey', {
+                this.$axios.post('/service/dataset/getReEncryptedKey', {
                     encryptedKey: this.encryptedKey
                 }).then(res => {
                     this.decrypt.reEncryptedKey = res.data.reEncryptedKey;
