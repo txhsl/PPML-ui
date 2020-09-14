@@ -52,7 +52,7 @@
 
         <el-dialog title="分享数据集" :visible.sync="shareVisible" width="30%">
             <el-form ref="share" :model="share" label-width="80px">
-                <el-form-item label="对方账户">
+                <el-form-item label="对方公钥">
                     <el-input v-model="share.address"></el-input>
                 </el-form-item>
             </el-form>
@@ -128,7 +128,8 @@
 
                 decrypt: {
                     reEncryptedKey: '',
-                    hash: ''
+                    hash: '',
+                    name: ''
                 },
                 decryptVisible: false
             }
@@ -185,11 +186,15 @@
             },
             onDownload(index, row) {
                 this.$axios.post('/service/dataset/download', {
-                    hash: this.decrypt.hash
+                    hash: this.decrypt.hash,
+                    name: this.decrypt.name,
+                    reEncryptedKey: this.decrypt.reEncryptedKey
                 }).then(res => {
                     this.$alert('文件路径为：' + res.data.path, '下载成功', {
                         confirmButtonText: '确定',
                     });
+                }).catch(err => {
+                    this.$message.error('Error!');
                 })
             },
             onDecryptHash(index, row) {
@@ -200,6 +205,9 @@
                     encryptedKey: this.encryptedKey
                 }).then(res => {
                     this.decrypt.reEncryptedKey = res.data.reEncryptedKey;
+                    this.decrypt.name = row.name;
+                }).catch(err => {
+                    this.$message.error('Error!');
                 })
             },
             handleDecryptHash() {
@@ -211,6 +219,8 @@
                         confirmButtonText: '确定',
                     });
                     this.decrypt.hash = res.data.hash;
+                }).catch(err => {
+                    this.$message.error('Error!');
                 })
             },
             onShare() {
@@ -222,6 +232,8 @@
                         confirmButtonText: '确定',
                     });
                     this.shareVisible = false;
+                }).catch(err => {
+                    this.$message.error('Error!');
                 })
             }
         }
