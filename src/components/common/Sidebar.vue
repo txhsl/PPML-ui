@@ -42,10 +42,21 @@
                         icon: 'el-icon-lx-home',
                         index: 'dashboard',
                         title: '系统状态'
-                    },{
+                    },
+                    {
+                        icon: 'el-icon-lx-people',
+                        index: 'role',
+                        title: '角色管理',
+                    },
+                    {
                         icon: 'el-icon-lx-file',
-                        index: 'dataset',
-                        title: '数据集管理',
+                        index: 'rbac',
+                        title: '公开数据管理',
+                    },
+                    {
+                        icon: 'el-icon-lx-unlock',
+                        index: 'pre',
+                        title: '隐私数据管理',
                     },
                     {
                         icon: 'el-icon-lx-sort',

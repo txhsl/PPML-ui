@@ -2,7 +2,7 @@
     <div>
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-lx-file"></i> 数据集管理</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-lx-unlock"></i> 隐私数据管理</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">

@@ -2,8 +2,7 @@
     <section class="main">
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-lx-attention"></i> 后台管理</el-breadcrumb-item>
-                <el-breadcrumb-item>后台监听</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-lx-attention"></i> 后台监听</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
