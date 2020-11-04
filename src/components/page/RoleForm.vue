@@ -43,6 +43,9 @@
                 <el-form-item label="用户地址">
                     <el-input v-model="register.user"></el-input>
                 </el-form-item>
+                <el-form-item label="对方公钥">
+                    <el-input v-model="register.pubkey"></el-input>
+                </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="registerVisible=false">取消</el-button>
@@ -69,7 +72,8 @@
                 checkVisible: false,
 
                 register: {
-                    user: ''
+                    user: '',
+                    pubkey: ''
                 },
                 registerVisible: false
             }
@@ -118,7 +122,8 @@
             onRegister() {
                 this.$axios.post('/service/dataset/registerUser', {
                     role: this.form.name,
-                    user: this.register.user
+                    user: this.register.user,
+                    userPubKey: this.register.pubkey
                 }).then(res => {
                     this.$alert('新的用户为：' + res.data.user, '添加成功', {
                         confirmButtonText: '确定',

@@ -8,8 +8,8 @@
         <div class="container">
             <div class="form-box">
                 <el-form ref="form" :model="form" label-width="100px">
-                    <el-form-item label="数据集ID">
-                        <el-input v-model="form.id"></el-input>
+                    <el-form-item label="数据集名称">
+                        <el-input v-model="form.name"></el-input>
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="onQuery">提交</el-button>
@@ -37,7 +37,7 @@
                             <el-table-column label="操作" width="160px">
                                 <template slot-scope="scope">
                                     <el-button type="primary" size="small" @click="onDownload(scope.$index, scope.row)">下载</el-button>
-                                    <el-button type="danger" size="small" @click="onDecryptHash(scope.$index, scope.row)">解密</el-button>
+                                    <el-button type="danger" size="small" @click="onDecrypt(scope.$index, scope.row)">解密</el-button>
                                 </template>
                             </el-table-column>
                         </el-table>
@@ -52,25 +52,16 @@
 
         <el-dialog title="分享数据集" :visible.sync="shareVisible" width="30%">
             <el-form ref="share" :model="share" label-width="80px">
-                <el-form-item label="对方公钥">
-                    <el-input v-model="share.address"></el-input>
+                <el-form-item label="对方角色">
+                    <el-input v-model="share.role"></el-input>
+                </el-form-item>
+                <el-form-item label="授权类型">
+                    <el-switch v-model="share.isRead" active-text="读权限" inactive-text="写权限"></el-switch>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="shareVisible=false">取消</el-button>
                 <el-button type="primary" @click="onShare">确定</el-button>
-            </span>
-        </el-dialog>
-
-        <el-dialog title="解密分片Hash" :visible.sync="decryptVisible" width="30%">
-            <el-form ref="share" :model="decrypt" label-width="140px">
-                <el-form-item label="数据集分享密钥">
-                    <el-input v-model="decrypt.reEncryptedKey"></el-input>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="decryptVisible=false">取消</el-button>
-                <el-button type="primary" @click="handleDecryptHash">确定</el-button>
             </span>
         </el-dialog>
 
@@ -106,16 +97,17 @@
         data: function(){
             return {
                 form: {
-                    id: ''
+                    name: ''
                 },
-                encryptedKey: '',
+                dataset: '',
                 owner: '',
                 amount: 0,
                 show: true,
                 results: [{}],
 
                 share:{
-                    address: ''
+                    role: '',
+                    isRead: true
                 },
                 shareVisible: false,
 
@@ -126,26 +118,21 @@
                 },
                 uploadVisible: false,
 
-                decrypt: {
-                    reEncryptedKey: '',
-                    hash: '',
-                    name: ''
-                },
-                decryptVisible: false
+                filePath: ''
             }
         },
         mounted(){
         },
         methods: {
             onQuery() {
-                this.$axios.post('/service/dataset/get', {
-                    encryptedKey: this.form.id
+                this.$axios.post('/service/dataset/getAll', {
+                    data: this.form.name
                 }).then(res => {
                     this.amount = res.data.amount;
                     this.owner = res.data.owner;
                     this.results = res.data.volumes;
 
-                    this.encryptedKey = res.data.encryptedKey;
+                    this.dataset = res.data.data;
                 }).catch(err => {
                     this.$message.error('Error!');
                 })
@@ -153,26 +140,24 @@
                 this.show = true;
             },
             onCreate() {
-                let randomKey = 'temp';
-                this.$axios.post('/service/dataset/create', {
-                    key: randomKey
+                this.$axios.post('/service/dataset/createData', {
+                    data: this.form.name
                 }).then(res => {
-                    this.$alert('新的数据集ID为：' + res.data.encryptedKey, '创建成功', {
+                    this.$alert('新的数据集密文密钥为：' + res.data.dcKey, '创建成功', {
                         confirmButtonText: '确定',
                     });
-                    this.form.id = res.data.encryptedKey;
-                    this.encryptedKey = res.data.encryptedKey;
+                    this.dataset = res.data.data;
                 }).catch(err => {
                     this.$message.error('Error!');
                 })
             },
             onAdd() {
-                this.$axios.post('/service/dataset/add', {
-                    encryptedKey: this.encryptedKey,
+                this.$axios.post('/service/dataset/addVolume', {
+                    data: this.dataset,
                     hash: this.upload.hash,
                     name: this.upload.fileName
                 }).then(res => {
-                    this.$alert('新的数据分片Hash为：' + res.data.hash, '添加成功', {
+                    this.$alert('交易Hash为：' + res.data.tx, '添加成功', {
                         confirmButtonText: '确定',
                     });
                     this.uploadVisible = false;
@@ -186,55 +171,56 @@
             },
             onDownload(index, row) {
                 this.$axios.post('/service/dataset/download', {
-                    hash: this.decrypt.hash,
-                    name: this.decrypt.name,
-                    reEncryptedKey: this.decrypt.reEncryptedKey
+                    hash: row.hash,
                 }).then(res => {
                     this.$alert('文件路径为：' + res.data.path, '下载成功', {
                         confirmButtonText: '确定',
                     });
+                    this.filePath = res.data.path;
                 }).catch(err => {
                     this.$message.error('Error!');
                 })
             },
-            onDecryptHash(index, row) {
-                this.decrypt.hash = row.hash;
-                this.decryptVisible = true;
-
-                this.$axios.post('/service/dataset/getReEncryptedKey', {
-                    encryptedKey: this.encryptedKey
+            onDecrypt(index, row) {
+                this.$axios.post('/service/dataset/decrypt', {
+                    data: this.dataset,
+                    path: this.filePath,
+                    name: row.name
                 }).then(res => {
-                    this.decrypt.reEncryptedKey = res.data.reEncryptedKey;
-                    this.decrypt.name = row.name;
-                }).catch(err => {
-                    this.$message.error('Error!');
-                })
-            },
-            handleDecryptHash() {
-                this.$axios.post('/service/dataset/decryptHash', {
-                    reEncryptedKey: this.decrypt.reEncryptedKey,
-                    encryptedHash: this.decrypt.hash
-                }).then(res => {
-                    this.$alert('数据集分片明文Hash为：' + res.data.hash, '解密成功', {
+                    this.$alert('文件路径为：' + res.data.path, '解密成功', {
                         confirmButtonText: '确定',
                     });
-                    this.decrypt.hash = res.data.hash;
                 }).catch(err => {
                     this.$message.error('Error!');
                 })
             },
             onShare() {
-                this.$axios.post('/service/dataset/share', {
-                    encryptedKey: this.encryptedKey,
-                    to: this.share.address
-                }).then(res => {
-                    this.$alert('数据集分享密钥为：' + res.data.reEncryptedKey, '分享成功', {
-                        confirmButtonText: '确定',
-                    });
-                    this.shareVisible = false;
-                }).catch(err => {
-                    this.$message.error('Error!');
-                })
+                if(this.share.isRead) {
+                    this.$axios.post('/service/dataset/assignReader', {
+                        data: this.dataset,
+                        role: this.share.role,
+                    }).then(res => {
+                        this.$alert('交易Hash为：' + res.data.tx, '分享成功', {
+                            confirmButtonText: '确定',
+                        });
+                        this.shareVisible = false;
+                    }).catch(err => {
+                        this.$message.error('Error!');
+                    })
+                }
+                else {
+                    this.$axios.post('/service/dataset/assignWriter', {
+                        data: this.dataset,
+                        role: this.share.role,
+                    }).then(res => {
+                        this.$alert('交易Hash为：' + res.data.tx, '分享成功', {
+                            confirmButtonText: '确定',
+                        });
+                        this.shareVisible = false;
+                    }).catch(err => {
+                        this.$message.error('Error!');
+                    })
+                }
             }
         }
     }

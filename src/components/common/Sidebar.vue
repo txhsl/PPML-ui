@@ -49,13 +49,8 @@
                         title: '角色管理',
                     },
                     {
-                        icon: 'el-icon-lx-file',
-                        index: 'rbac',
-                        title: '公开数据管理',
-                    },
-                    {
                         icon: 'el-icon-lx-unlock',
-                        index: 'pre',
+                        index: 'dataset',
                         title: '隐私数据管理',
                     },
                     {

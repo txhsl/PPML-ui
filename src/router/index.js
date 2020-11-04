@@ -25,14 +25,9 @@ export default new Router({
                     meta: { title: '图标' }
                 },
                 {
-                    path: '/pre',
-                    component: resolve => require(['../components/page/PREForm.vue'], resolve),
+                    path: '/dataset',
+                    component: resolve => require(['../components/page/DataSetForm.vue'], resolve),
                     meta: { title: '隐私数据管理' }
-                },
-                {
-                    path: '/rbac',
-                    component: resolve => require(['../components/page/RBACForm.vue'], resolve),
-                    meta: { title: '公开数据管理' }
                 },
                 {
                     path: '/role',
